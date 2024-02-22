@@ -31,8 +31,8 @@ public class StringController {
             @RequestParam int endIndex) {
         logger.info("Received request to get substring: s={}, beginIndex={}, endIndex={}", s, beginIndex, endIndex);
 
-        if (s == null || s.isEmpty() || beginIndex < 0 || endIndex < 0 || beginIndex > endIndex
-                || endIndex > s.length()) {
+        if (s == null || s.isEmpty() || beginIndex < 0 || beginIndex >= s.length() || endIndex < 0
+                || endIndex > s.length() || beginIndex > endIndex) {
             logger.warn("Invalid input: s={}, beginIndex={}, endIndex={}", s, beginIndex, endIndex);
             return ResponseEntity.badRequest().build();
         }
@@ -44,36 +44,33 @@ public class StringController {
     }
 
     @GetMapping("/contains")
-    public ResponseEntity<Boolean> contains(@RequestParam String s, @RequestParam String substring) {
-        logger.info("Received request to check if string contains substring: s={}, substring={}", s, substring);
+    public ResponseEntity<Boolean> contains(@RequestParam String s, @RequestParam String searchStr) {
+        logger.info("Received request to check if string contains substring: s={}, searchStr={}", s, searchStr);
 
-        if (s == null || s.isEmpty() || substring == null || substring.isEmpty()) {
-            logger.warn("Invalid input: s={}, substring={}", s, substring);
+        if (s == null || s.isEmpty() || searchStr == null || searchStr.isEmpty()) {
+            logger.warn("Invalid input: s={}, searchStr={}", s, searchStr);
             return ResponseEntity.badRequest().build();
         }
 
-        boolean result = s.contains(substring);
-        logger.info("Contains substring: result={}", result);
+        boolean result = s.contains(searchStr);
+        logger.info("Contains: result={}", result);
 
         return ResponseEntity.ok(result);
     }
 
-    // reemplazar strings
     @GetMapping("/replace")
-    public ResponseEntity<String> replace(@RequestParam String s, @RequestParam String target,
-            @RequestParam String replacement) {
-        logger.info("Received request to replace string: s={}, target={}, replacement={}", s, target, replacement);
+    public ResponseEntity<String> replace(@RequestParam String s, @RequestParam String oldStr,
+            @RequestParam String newStr) {
+        logger.info("Received request to replace substring: s={}, oldStr={}, newStr={}", s, oldStr, newStr);
 
-        if (s == null || s.isEmpty() || target == null || target.isEmpty() || replacement == null
-                || replacement.isEmpty()) {
-            logger.warn("Invalid input: s={}, target={}, replacement={}", s, target, replacement);
+        if (s == null || s.isEmpty() || oldStr == null || oldStr.isEmpty() || newStr == null) {
+            logger.warn("Invalid input: s={}, oldStr={}, newStr={}", s, oldStr, newStr);
             return ResponseEntity.badRequest().build();
         }
 
-        String result = s.replace(target, replacement);
-        logger.info("Replaced string: result={}", result);
+        String result = s.replace(oldStr, newStr);
+        logger.info("Replaced: result={}", result);
 
         return ResponseEntity.ok(result);
     }
-
 }

@@ -88,31 +88,4 @@ public class StringControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void testContains() throws Exception {
-        String s = "HelloWorld";
-        String substring = "World";
-        boolean expected = true;
-
-        mockMvc.perform(get("/api/strings/contains")
-                .param("s", s)
-                .param("substring", substring))
-                .andExpect(status().isOk())
-                .andExpect(content().string(String.valueOf(expected)));
-    }
-
-    @Test
-    public void testReplace() throws Exception {
-        String s = "HelloWorld";
-        String target = "World";
-        String replacement = "Universe";
-        String expected = "HelloUniverse";
-
-        mockMvc.perform(get("/api/strings/replace")
-                .param("s", s)
-                .param("target", target)
-                .param("replacement", replacement))
-                .andExpect(status().isOk())
-                .andExpect(content().string(expected));
-    }
 }

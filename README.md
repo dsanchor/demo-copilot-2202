@@ -59,3 +59,21 @@ curl -X GET 'http://localhost:8080/api/strings/contains?s=hello&substring=ell'
 ```
 
 Estos comandos asumen que tu aplicación se está ejecutando en `localhost` en el puerto `8080`. Si estás ejecutando la aplicación en un host o puerto diferente, necesitarás ajustar las URLs en consecuencia.
+
+## Containerización de la aplicación
+
+### Construir la imagen de Docker
+
+Para construir la imagen de Docker, ejecuta el siguiente comando:
+
+```bash
+docker build -t strings-api .
+```
+
+### Ejecutar la imagen de Docker
+
+Para ejecutar la imagen de Docker, ejecuta el siguiente comando:
+
+```bash
+docker run -p 8080:8080 strings-api
+```
